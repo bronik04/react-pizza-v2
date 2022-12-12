@@ -165,3 +165,4 @@ export const pizzas = [
   }
 ];
 export const typesOfDough = ['тонкое', 'традиционное'];
+export const sortList = ['популярности', 'цене', 'алфавиту'];

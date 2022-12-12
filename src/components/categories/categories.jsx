@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { categories } from '../../utils/consts';
 
 const Categories = () => {
-  const [active, setActive] = useState('');
+  const [active, setActive] = useState('Все');
 
   return (
     <div className='categories'>
