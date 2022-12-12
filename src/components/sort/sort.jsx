@@ -3,7 +3,7 @@ import { sortList } from '../../utils/consts';
 
 const Sort = () => {
   const [opened, setOpened] = useState(false);
-  const [active, setActive] = useState('');
+  const [active, setActive] = useState('популярности');
 
   const handleSort = value => {
     setActive(value);
@@ -12,7 +12,7 @@ const Sort = () => {
 
   return (
     <div className='sort'>
-      <div className='sort__label'>
+      <div onClick={() => setOpened(!opened)} className='sort__label'>
         <svg
           style={opened ? { transform: 'rotate(180deg)' } : {}}
           width='10'
@@ -27,7 +27,7 @@ const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpened(!opened)}>{active}</span>
+        <span>{active}</span>
       </div>
       {opened && (
         <div className='sort__popup'>
