@@ -3,16 +3,14 @@ import { categories } from '../../utils/consts';
 
 const Categories = () => {
   const [active, setActive] = useState('');
-  const handleActive = value => {
-    setActive(value);
-  };
 
   return (
     <div className='categories'>
       <ul>
         {categories.map(value => (
           <li
-            onClick={() => handleActive(value)}
+            key={value}
+            onClick={() => setActive(value)}
             className={active === value ? 'active' : ''}
           >
             {value}
