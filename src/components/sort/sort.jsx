@@ -14,7 +14,7 @@ const Sort = () => {
     <div className='sort'>
       <div className='sort__label'>
         <svg
-          style={opened ? {transform: 'rotate(180deg)'} : {}}
+          style={opened ? { transform: 'rotate(180deg)' } : {}}
           width='10'
           height='6'
           viewBox='0 0 10 6'
