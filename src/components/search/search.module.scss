@@ -1,0 +1,38 @@
+@import "../../scss/variables";
+.wrapper {
+  flex-grow: 1;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  fill: $orange;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.search {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, .2);
+  padding: 12px 40px;
+  border-radius: 10px;
+  font-size: 16px;
+
+  &__icon {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    opacity: .5;
+    top: 10px;
+    left: 10px;
+  }
+
+
+  &:focus {
+    border: 2px solid $orange;
+  }
+}

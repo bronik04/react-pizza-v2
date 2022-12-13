@@ -10,6 +10,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    column-gap: 45px;
 
     @media (max-width: 660px) {
       flex-direction: column;
@@ -26,6 +27,13 @@
 
     img {
       margin-right: 15px;
+      transform: rotate(30deg);
+      transition: transform .3s ease-in-out;
+
+      &:hover {
+        transition: transform .3s ease-in-out;
+        transform: rotate(90deg);
+      }
     }
 
     h1 {

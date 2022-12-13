@@ -7,10 +7,18 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPizzas } from '../services/slices/pizza-slice';
 
-const Home = () => {
+const Home = ({ searchValue }) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState(0);
+  const skeletons = [...new Array(6)].map((_, index) => (
+    <Skeleton key={index} />
+  ));
+  const pizzas = items
+    .filter(pizza =>
+      pizza.title.toUpperCase().includes(searchValue.toUpperCase()),
+    )
+    .map(pizza => <PizzaBlock key={pizza.title} {...pizza} />);
 
   // const dispatch = useDispatch();
   // const { items, loading } = useSelector(state => state.pizzas);
@@ -51,13 +59,7 @@ const Home = () => {
         </div>
         <h2 className='content__title'>Все пиццы</h2>
         <div className='content__items'>
-          {isLoading
-            ? [...new Array(6)].map((_, index) => (
-                <Skeleton key={index} />
-              ))
-            : items.map(pizza => (
-                <PizzaBlock key={pizza.title} {...pizza} />
-              ))}
+          {isLoading ? skeletons : pizzas}
         </div>
       </div>
     </div>
