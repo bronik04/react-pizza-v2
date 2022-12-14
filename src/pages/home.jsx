@@ -1,17 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import qs from 'qs';
+
 import Categories from '../components/categories/categories';
 import Sort from '../components/sort/sort';
 import PizzaBlock from '../components/pizza-block/pizza-block';
-import axios from 'axios';
+import { skeletons, sortList } from '../utils/consts';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategory } from '../services/slices/filter-slice';
-import {skeletons} from "../utils/consts";
+import {
+  setCategory,
+  setFilter,
+} from '../services/slices/filter-slice';
+import { useNavigate } from 'react-router-dom';
 
 const Home = ({ searchValue }) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isSearch = useRef(false);
+  const isMounted = useRef(false);
   const { categoryId, sort } = useSelector(state => state.filter);
 
   const pizzas = items.map(pizza => (
@@ -22,9 +31,37 @@ const Home = ({ searchValue }) => {
   const search = searchValue ? `search=${searchValue}` : '';
   const sortBy = `&sortBy=${sort.sortProperty}&order=desc`;
 
+  useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+      const sort = sortList.find(
+        item => item.sortProperty === params.sortProperty,
+      );
 
+      dispatch(
+        setFilter({
+          ...params,
+          sort,
+        }),
+      );
+      isSearch.current = true;
+    }
+  }, []);
 
   useEffect(() => {
+    if (isMounted) {
+      const queryString = qs.stringify({
+        sortProperty: sort.sortProperty,
+        categoryId,
+      });
+      navigate(`?${queryString}`);
+    }
+
+    isMounted.current = true;
+  }, [category, searchValue, sortBy]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
     setIsLoading(true);
     const gerItems = async () => {
       const res = await axios.get(
@@ -34,9 +71,11 @@ const Home = ({ searchValue }) => {
       setIsLoading(false);
     };
 
-    gerItems();
+    if (!isSearch.current) {
+      gerItems();
+    }
 
-    window.scrollTo(0, 0);
+    isSearch.current = false;
   }, [category, searchValue, sortBy]);
 
   const handleChangeCategory = categoryId => {
