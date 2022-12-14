@@ -1,40 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import Categories from '../components/categories/categories';
 import Sort from '../components/sort/sort';
-import { Skeleton } from '../components/pizza-block/skeleton';
 import PizzaBlock from '../components/pizza-block/pizza-block';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPizzas } from '../services/slices/pizza-slice';
+import { setCategory } from '../services/slices/filter-slice';
+import {skeletons} from "../utils/consts";
 
 const Home = ({ searchValue }) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState(0);
-  const skeletons = [...new Array(6)].map((_, index) => (
-    <Skeleton key={index} />
+
+  const dispatch = useDispatch();
+  const { categoryId, sort } = useSelector(state => state.filter);
+
+  const pizzas = items.map(pizza => (
+    <PizzaBlock key={pizza.title} {...pizza} />
   ));
-  const pizzas = items
-    .filter(pizza =>
-      pizza.title.toUpperCase().includes(searchValue.toUpperCase()),
-    )
-    .map(pizza => <PizzaBlock key={pizza.title} {...pizza} />);
 
-  // const dispatch = useDispatch();
-  // const { items, loading } = useSelector(state => state.pizzas);
+  const category = categoryId > 0 ? `category=${categoryId}` : '';
+  const search = searchValue ? `search=${searchValue}` : '';
+  const sortBy = `&sortBy=${sort.sortProperty}&order=desc`;
 
-  // useEffect(() => {
-  //   dispatch(fetchPizzas());
-  //   window.scrollTo(0, 0);
-  // }, []);
+
 
   useEffect(() => {
     setIsLoading(true);
     const gerItems = async () => {
       const res = await axios.get(
-        `https://6396f81d77359127a0282b32.mockapi.io/items?${
-          activeCategory > 0 ? `category=${activeCategory}` : ''
-        }`,
+        `https://6396f81d77359127a0282b32.mockapi.io/items?${category}${search}${sortBy}`,
       );
       setItems(res.data);
       setIsLoading(false);
@@ -43,17 +37,19 @@ const Home = ({ searchValue }) => {
     gerItems();
 
     window.scrollTo(0, 0);
-  }, [activeCategory]);
+  }, [category, searchValue, sortBy]);
+
+  const handleChangeCategory = categoryId => {
+    dispatch(setCategory(categoryId));
+  };
 
   return (
     <div className='content'>
       <div className='container'>
         <div className='content__top'>
           <Categories
-            category={activeCategory}
-            onClick={activeCategory =>
-              setActiveCategory(activeCategory)
-            }
+            category={categoryId}
+            onClick={handleChangeCategory}
           />
           <Sort />
         </div>
