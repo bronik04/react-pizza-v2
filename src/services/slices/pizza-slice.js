@@ -3,38 +3,44 @@ import axios from 'axios';
 
 const initialState = {
   items: [],
-  loading: true,
-  error: false,
+  status: 'loading',
 };
 
 export const fetchPizzas = createAsyncThunk(
   'pizzas/fetchPizzas',
-  async () => {
-    const res = await axios.get(
-      'https://6396f81d77359127a0282b32.mockapi.io/items',
+  async (params) => {
+    const {category, search, sortBy} = params;
+    const {data} = await axios.get(
+      `https://6396f81d77359127a0282b32.mockapi.io/items?${category}${search}${sortBy}`,
     );
-    return res.data;
+    return data;
   },
 );
 
-const getPizzas = createSlice({
+const pizzasSlice = createSlice({
   name: 'pizzas',
   initialState,
-  reducers: {},
+  reducers: {
+    // setItems(state, action) {
+    //   state.items = action.payload;
+    // },
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchPizzas.pending, state => {
-        state.loading = true;
+        state.status = 'loading';
+        state.items = [];
       })
       .addCase(fetchPizzas.fulfilled, (state, action) => {
-        state.loading = false;
+        state.status = 'success';
         state.items = action.payload;
       })
       .addCase(fetchPizzas.rejected, state => {
-        state.loading = false;
-        state.error = true;
+        state.status = 'error';
+        state.items = [];
       });
   },
 });
 
-export default getPizzas.reducer;
+export const { setItems } = pizzasSlice.actions;
+export default pizzasSlice.reducer;
