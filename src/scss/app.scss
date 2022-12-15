@@ -79,6 +79,7 @@ body {
 }
 
 .cart {
+  padding-bottom: 80px;
   &__top {
     display: flex;
     justify-content: space-between;
@@ -274,7 +275,6 @@ body {
         span {
           color: darken($color: $gray-line, $amount: 20);
           font-weight: 500;
-          font-weight: 600;
         }
 
         &:hover {
@@ -322,7 +322,7 @@ body {
       color: #777777;
     }
 
-    icon {
+    span {
       position: relative;
       top: 2px;
     }

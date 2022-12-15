@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import qs from 'qs';
 
@@ -19,8 +19,8 @@ const Home = ({ searchValue }) => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isSearch = useRef(false);
-  const isMounted = useRef(false);
+  // const isSearch = useRef(false);
+  // const isMounted = useRef(false);
   const { categoryId, sort } = useSelector(state => state.filter);
 
   const pizzas = items.map(pizza => (
@@ -44,20 +44,20 @@ const Home = ({ searchValue }) => {
           sort,
         }),
       );
-      isSearch.current = true;
+      // isSearch.current = true;
     }
   }, []);
 
   useEffect(() => {
-    if (isMounted) {
+    // if (isMounted) {
       const queryString = qs.stringify({
         sortProperty: sort.sortProperty,
         categoryId,
       });
       navigate(`?${queryString}`);
-    }
+    // }
 
-    isMounted.current = true;
+    // isMounted.current = true;
   }, [category, searchValue, sortBy]);
 
   useEffect(() => {
@@ -71,11 +71,11 @@ const Home = ({ searchValue }) => {
       setIsLoading(false);
     };
 
-    if (!isSearch.current) {
+    // if (!isSearch.current) {
       gerItems();
-    }
+    // }
 
-    isSearch.current = false;
+    // isSearch.current = false;
   }, [category, searchValue, sortBy]);
 
   const handleChangeCategory = categoryId => {

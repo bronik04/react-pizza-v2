@@ -29,8 +29,10 @@
       margin-right: 15px;
       transform: rotate(30deg);
       transition: transform .3s ease-in-out;
+    }
 
-      &:hover {
+    &:hover {
+      img {
         transition: transform .3s ease-in-out;
         transform: rotate(90deg);
       }
@@ -39,7 +41,6 @@
     h1 {
       color: #181818;
       font-size: 24px;
-      letter-spacing: 1%;
       text-transform: uppercase;
       font-weight: 800;
     }
