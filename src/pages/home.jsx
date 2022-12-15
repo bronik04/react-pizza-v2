@@ -8,20 +8,23 @@ import { skeletons, sortList } from '../utils/consts';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  selectFilter,
   setCategory,
   setFilter,
 } from '../services/slices/filter-slice';
 import { useNavigate } from 'react-router-dom';
-import {fetchPizzas} from "../services/slices/pizza-slice";
+import {
+  fetchPizzas,
+  selectPizza,
+} from '../services/slices/pizza-slice';
 
-const Home = ({ searchValue }) => {
+const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // const isSearch = useRef(false);
   // const isMounted = useRef(false);
-  const { categoryId, sort } = useSelector(state => state.filter);
-  const { items, status } = useSelector(state => state.pizzas);
-
+  const { categoryId, sort, searchValue } = useSelector(selectFilter);
+  const { items, status } = useSelector(selectPizza);
 
   const pizzas = items.map(pizza => (
     <PizzaBlock key={pizza.title} {...pizza} />
@@ -50,11 +53,11 @@ const Home = ({ searchValue }) => {
 
   useEffect(() => {
     // if (isMounted) {
-      const queryString = qs.stringify({
-        sortProperty: sort.sortProperty,
-        categoryId,
-      });
-      navigate(`?${queryString}`);
+    const queryString = qs.stringify({
+      sortProperty: sort.sortProperty,
+      categoryId,
+    });
+    navigate(`?${queryString}`);
     // }
 
     // isMounted.current = true;
@@ -63,15 +66,17 @@ const Home = ({ searchValue }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     const gerItems = async () => {
-        dispatch(fetchPizzas({
+      dispatch(
+        fetchPizzas({
           category,
           search,
-          sortBy
-        }))
+          sortBy,
+        }),
+      );
     };
 
     // if (!isSearch.current) {
-      gerItems();
+    gerItems();
     // }
 
     // isSearch.current = false;

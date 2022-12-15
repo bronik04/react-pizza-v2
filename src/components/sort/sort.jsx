@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { sortList } from '../../utils/consts';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSort } from '../../services/slices/filter-slice';
+import {selectSort, setSort} from '../../services/slices/filter-slice';
 
 const Sort = () => {
   const [opened, setOpened] = useState(false);
   const sortRef = useRef();
   const dispatch = useDispatch();
-  const sort = useSelector(state => state.filter.sort);
+  const sort = useSelector(selectSort);
 
   useEffect(() => {
     const handleClickOutside = event => {
