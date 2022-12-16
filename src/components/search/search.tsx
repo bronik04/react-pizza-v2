@@ -1,4 +1,5 @@
 import React, {
+  FC,
   useCallback,
   useEffect,
   useRef,
@@ -9,8 +10,8 @@ import debounce from 'lodash.debounce';
 import { useDispatch } from 'react-redux';
 import { setSearchValue } from '../../services/slices/filter-slice';
 
-const Search = () => {
-  const inputRef = useRef();
+const Search: FC = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState('');
   const dispatch = useDispatch();
 
@@ -19,20 +20,20 @@ const Search = () => {
     setValue('');
   };
 
-  const onChangeInput = event => {
-    setValue(event.target.value);
-    updateSearchValue(event.target.value);
+  const onChangeInput = (evt: any) => {
+    setValue(evt.target.value);
+    updateSearchValue(evt.target.value);
   };
 
   const updateSearchValue = useCallback(
-    debounce(str => {
+    debounce((str) => {
       dispatch(setSearchValue(str));
     }, 500),
     [],
   );
 
   useEffect(() => {
-    const onEscKeydown = evt => {
+    const onEscKeydown = (evt: any) => {
       evt.key === 'Escape' && handleClear();
     };
 

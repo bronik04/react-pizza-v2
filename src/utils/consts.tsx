@@ -1,5 +1,6 @@
 import { Skeleton } from '../components/pizza-block/skeleton';
 import React from 'react';
+
 export const categories = [
   'Все',
   'Мясные',
@@ -9,7 +10,7 @@ export const categories = [
   'Закрытые',
 ];
 export const typesOfDough = ['тонкое', 'традиционное'];
-export const sortList = [
+export const sortList: SortItem[] = [
   { name: 'популярности', sortProperty: 'rating' },
   { name: 'цене', sortProperty: 'price' },
   { name: 'алфавиту', sortProperty: 'title' },
@@ -17,3 +18,33 @@ export const sortList = [
 export const skeletons = [...new Array(6)].map((_, index) => (
   <Skeleton key={index} />
 ));
+
+export type SortItem = {
+  name: string;
+  sortProperty: string;
+};
+
+export type CategoriesProps = {
+  category: number;
+  onClick: any;
+};
+
+export type CartItemProps = {
+  id: string,
+  title: string,
+  type: string,
+  sizes: number,
+  price: number,
+  count: number,
+  imageUrl: string,
+}
+
+export type PizzaBlockProps = {
+  id: string,
+  title: string,
+  types: number[],
+  sizes: number[],
+  price: number,
+  count: number,
+  imageUrl: string,
+}

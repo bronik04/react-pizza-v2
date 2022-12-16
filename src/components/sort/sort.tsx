@@ -1,16 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { sortList } from '../../utils/consts';
+import { SortItem, sortList } from '../../utils/consts';
 import { useDispatch, useSelector } from 'react-redux';
-import {selectSort, setSort} from '../../services/slices/filter-slice';
+import {
+  selectSort,
+  setSort,
+} from '../../services/slices/filter-slice';
 
 const Sort = () => {
   const [opened, setOpened] = useState(false);
-  const sortRef = useRef();
+  const sortRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const sort = useSelector(selectSort);
 
   useEffect(() => {
-    const handleClickOutside = event => {
+    const handleClickOutside = (event: any) => {
       if (!event.path.includes(sortRef.current)) {
         setOpened(false);
       }
@@ -23,7 +26,7 @@ const Sort = () => {
     };
   }, []);
 
-  const handleSort = obj => {
+  const handleSort = (obj: SortItem) => {
     dispatch(setSort(obj));
     setOpened(false);
   };

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {FC, useEffect} from 'react';
 import qs from 'qs';
 
 import Categories from '../components/categories/categories';
@@ -18,7 +18,7 @@ import {
   selectPizza,
 } from '../services/slices/pizza-slice';
 
-const Home = () => {
+const Home: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // const isSearch = useRef(false);
@@ -26,7 +26,7 @@ const Home = () => {
   const { categoryId, sort, searchValue } = useSelector(selectFilter);
   const { items, status } = useSelector(selectPizza);
 
-  const pizzas = items.map(pizza => (
+  const pizzas = items.map((pizza: any) => (
     <Link key={pizza.title} to={'pizza/' + pizza.id}>
       <PizzaBlock {...pizza} />
     </Link>
@@ -70,6 +70,7 @@ const Home = () => {
     window.scrollTo(0, 0);
     const gerItems = async () => {
       dispatch(
+          //@ts-ignore
         fetchPizzas({
           category,
           search,
@@ -85,7 +86,7 @@ const Home = () => {
     // isSearch.current = false;
   }, [category, searchValue, sortBy]);
 
-  const handleChangeCategory = categoryId => {
+  const handleChangeCategory = (categoryId: number) => {
     dispatch(setCategory(categoryId));
   };
 

@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { categories } from '../../utils/consts';
+import React, {FC} from 'react';
+import {categories, CategoriesProps} from '../../utils/consts';
 
-const Categories = ({category, onClick}) => {
-  // const [active, setActive] = useState('Все');
+const Categories: FC<CategoriesProps> = ({category, onClick}) => {
 
   return (
     <div className='categories'>

@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {FC} from 'react';
 import { useDispatch } from 'react-redux';
 import {
   addItem,
   minusItem,
   removeItem,
 } from '../../services/slices/cart-slice';
+import {CartItemProps} from "../../utils/consts";
 
-const CartItem = props => {
+const CartItem: FC<CartItemProps> = props => {
   const { id } = props;
   const dispatch = useDispatch();
 
