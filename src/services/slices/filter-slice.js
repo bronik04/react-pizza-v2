@@ -21,7 +21,7 @@ const filterSlice = createSlice({
     },
     setFilter (state, action) {
       state.sort = action.payload.sort;
-      state.categoryId = action.payload.categoryId;
+      state.categoryId = Number(action.payload.categoryId);
     },
     setSearchValue (state, action) {
       state.searchValue = action.payload;
