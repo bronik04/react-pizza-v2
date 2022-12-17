@@ -1,4 +1,5 @@
 import React, {
+  ChangeEvent,
   FC,
   useCallback,
   useEffect,
@@ -20,7 +21,7 @@ const Search: FC = () => {
     setValue('');
   };
 
-  const onChangeInput = (evt: any) => {
+  const onChangeInput = (evt: ChangeEvent<HTMLInputElement>) => {
     setValue(evt.target.value);
     updateSearchValue(evt.target.value);
   };
@@ -33,7 +34,7 @@ const Search: FC = () => {
   );
 
   useEffect(() => {
-    const onEscKeydown = (evt: any) => {
+    const onEscKeydown = (evt: KeyboardEvent) => {
       evt.key === 'Escape' && handleClear();
     };
 

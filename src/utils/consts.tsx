@@ -26,7 +26,7 @@ export type SortItem = {
 
 export type CategoriesProps = {
   category: number;
-  onClick: any;
+  onClick: (index: number) => void;
 };
 
 export type CartItemProps = {
