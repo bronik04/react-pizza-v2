@@ -1,12 +1,23 @@
-import React, {FC, useState} from 'react';
-import {PizzaBlockProps, typesOfDough} from '../../utils/consts';
+import React, { FC, useState } from 'react';
+import {
+  CartItemProps,
+  PizzaBlockProps,
+  typesOfDough,
+} from '../../utils/consts';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addItem,
   selectCartItemById,
 } from '../../services/slices/cart-slice';
 
-const PizzaBlock: FC<PizzaBlockProps> = ({ id, title, price, imageUrl, sizes, types }) => {
+const PizzaBlock: FC<PizzaBlockProps> = ({
+  id,
+  title,
+  price,
+  imageUrl,
+  sizes,
+  types,
+}) => {
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
   const cartItem = useSelector(selectCartItemById(id));
@@ -15,11 +26,12 @@ const PizzaBlock: FC<PizzaBlockProps> = ({ id, title, price, imageUrl, sizes, ty
   const count = cartItem ? cartItem.count : 0;
 
   const addToCart = () => {
-    const item = {
+    const item: CartItemProps = {
       id,
       title,
       price,
       imageUrl,
+      count: 0,
       type: typesOfDough[activeType],
       sizes: sizes[activeSize],
     };

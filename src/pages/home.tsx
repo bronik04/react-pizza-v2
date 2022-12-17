@@ -6,7 +6,7 @@ import Sort from '../components/sort/sort';
 import PizzaBlock from '../components/pizza-block/pizza-block';
 import { skeletons, sortList } from '../utils/consts';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   selectFilter,
   setCategory,
@@ -17,10 +17,11 @@ import {
   fetchPizzas,
   selectPizza,
 } from '../services/slices/pizza-slice';
+import {useAppDispatch} from "../services/store";
 
 const Home: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   // const isSearch = useRef(false);
   // const isMounted = useRef(false);
   const { categoryId, sort, searchValue } = useSelector(selectFilter);
@@ -39,15 +40,17 @@ const Home: FC = () => {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
+
       const sort = sortList.find(
         item => item.sortProperty === params.sortProperty,
       );
-      console.log(params)
 
-      dispatch(
+
+        dispatch(
         setFilter({
           ...params,
-          sort,
+            // @ts-ignore
+            sort,
         }),
       );
       // isSearch.current = true;

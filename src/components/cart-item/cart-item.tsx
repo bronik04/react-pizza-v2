@@ -15,6 +15,12 @@ const CartItem: FC<CartItemProps> = props => {
     dispatch(
       addItem({
         id,
+        title: '',
+        type: '',
+        sizes: 0,
+        price: 0,
+        count: 0,
+        imageUrl: ''
       }),
     );
   };

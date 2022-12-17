@@ -21,7 +21,7 @@ export const skeletons = [...new Array(6)].map((_, index) => (
 
 export type SortItem = {
   name: string;
-  sortProperty: string;
+  sortProperty: 'rating' | 'price' | 'title';
 };
 
 export type CategoriesProps = {
