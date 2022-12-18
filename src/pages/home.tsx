@@ -12,7 +12,7 @@ import {
   setCategory,
   setFilter,
 } from '../services/slices/filter-slice';
-import {Link, useNavigate} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import {
   fetchPizzas,
   selectPizza,
@@ -28,9 +28,7 @@ const Home: FC = () => {
   const { items, status } = useSelector(selectPizza);
 
   const pizzas = items.map((pizza: any) => (
-    <Link key={pizza.title} to={'pizza/' + pizza.id}>
-      <PizzaBlock {...pizza} />
-    </Link>
+      <PizzaBlock key={pizza.title} {...pizza} />
   ));
 
   const category = categoryId > 0 ? `category=${categoryId}` : '';
@@ -44,7 +42,6 @@ const Home: FC = () => {
       const sort = sortList.find(
         item => item.sortProperty === params.sortProperty,
       );
-
 
         dispatch(
         setFilter({
@@ -73,7 +70,6 @@ const Home: FC = () => {
     window.scrollTo(0, 0);
     const gerItems = async () => {
       dispatch(
-          //@ts-ignore
         fetchPizzas({
           category,
           search,

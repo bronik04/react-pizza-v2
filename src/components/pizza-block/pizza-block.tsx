@@ -9,6 +9,7 @@ import {
   addItem,
   selectCartItemById,
 } from '../../services/slices/cart-slice';
+import { Link } from 'react-router-dom';
 
 const PizzaBlock: FC<PizzaBlockProps> = ({
   id,
@@ -40,12 +41,14 @@ const PizzaBlock: FC<PizzaBlockProps> = ({
 
   return (
     <div className='pizza-block'>
-      <img
-        className='pizza-block__image'
-        src={imageUrl}
-        alt={title}
-      />
-      <h4 className='pizza-block__title'>{title}</h4>
+      <Link to={'pizza/' + id}>
+        <img
+          className='pizza-block__image'
+          src={imageUrl}
+          alt={title}
+        />
+        <h4 className='pizza-block__title'>{title}</h4>
+      </Link>
       <div className='pizza-block__selector'>
         <ul>
           {types.map((dough, index) => (
