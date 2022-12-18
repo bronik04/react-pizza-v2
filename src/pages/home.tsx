@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import qs from 'qs';
 
 import Categories from '../components/categories/categories';
@@ -12,12 +12,12 @@ import {
   setCategory,
   setFilter,
 } from '../services/slices/filter-slice';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   fetchPizzas,
   selectPizza,
 } from '../services/slices/pizza-slice';
-import {useAppDispatch} from "../services/store";
+import { useAppDispatch } from '../services/store';
 
 const Home: FC = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Home: FC = () => {
   const { items, status } = useSelector(selectPizza);
 
   const pizzas = items.map((pizza: any) => (
-      <PizzaBlock key={pizza.title} {...pizza} />
+    <PizzaBlock key={pizza.title} {...pizza} />
   ));
 
   const category = categoryId > 0 ? `category=${categoryId}` : '';
@@ -40,14 +40,14 @@ const Home: FC = () => {
       const params = qs.parse(window.location.search.substring(1));
 
       const sort = sortList.find(
-        item => item.sortProperty === params.sortProperty,
+        (item) => item.sortProperty === params.sortProperty,
       );
 
-        dispatch(
+      dispatch(
         setFilter({
           ...params,
-            // @ts-ignore
-            sort,
+          // @ts-ignore
+          sort,
         }),
       );
       // isSearch.current = true;
@@ -85,24 +85,24 @@ const Home: FC = () => {
     // isSearch.current = false;
   }, [category, searchValue, sortBy]);
 
-  const handleChangeCategory = (categoryId: number) => {
+  const handleChangeCategory = useCallback((categoryId: number) => {
     dispatch(setCategory(categoryId));
-  };
+  }, []);
 
   return (
-      <div className='container'>
-        <div className='content__top'>
-          <Categories
-            category={categoryId}
-            onClick={handleChangeCategory}
-          />
-          <Sort />
-        </div>
-        <h2 className='content__title'>Все пиццы</h2>
-        <div className='content__items'>
-          {status === 'loading' ? skeletons : pizzas}
-        </div>
+    <div className='container'>
+      <div className='content__top'>
+        <Categories
+          category={categoryId}
+          onClick={handleChangeCategory}
+        />
+        <Sort />
       </div>
+      <h2 className='content__title'>Все пиццы</h2>
+      <div className='content__items'>
+        {status === 'loading' ? skeletons : pizzas}
+      </div>
+    </div>
   );
 };
 

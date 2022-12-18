@@ -188,6 +188,22 @@ body {
             display: none;
           }
         }
+        &--disabled {
+          cursor: auto;
+          border-color: #787878;
+
+          &:active {
+            transform: none;
+          }
+
+          &:hover {
+            background-color: transparent;
+          }
+
+          svg path {
+            fill: #787878;
+          }
+        }
       }
 
       b {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { SortItem, sortList } from '../../utils/consts';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -6,7 +6,7 @@ import {
   setSort,
 } from '../../services/slices/filter-slice';
 
-const Sort = () => {
+const Sort: FC = React.memo(() => {
   const [opened, setOpened] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
@@ -50,7 +50,7 @@ const Sort = () => {
       {opened && (
         <div className='sort__popup'>
           <ul>
-            {sortList.map(sortItem => (
+            {sortList.map((sortItem) => (
               <li
                 key={sortItem.name}
                 className={
@@ -68,6 +68,6 @@ const Sort = () => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;
