@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import logo from '../../assets/img/pizza-logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 import Search from '../search/search';
@@ -9,6 +9,15 @@ const Header: FC = () => {
   const { items, totalPrice } = useSelector(selectCart);
   const location = useLocation();
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(items);
+      localStorage.setItem('cart', json);
+    }
+    isMounted.current = true;
+  }, [items, totalPrice]);
 
   return (
     <div className='header'>
