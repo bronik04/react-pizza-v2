@@ -8,6 +8,7 @@ import CartEmpty from "../components/cart-empty/cart-empty";
 const Cart: FC = () => {
   const dispatch = useDispatch();
   const { items, totalPrice } = useSelector(selectCart);
+    console.log(totalPrice)
   const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
 
   const onClickClear = () => {
