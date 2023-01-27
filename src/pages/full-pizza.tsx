@@ -31,7 +31,7 @@ const FullPizza: FC = () => {
   }
 
   return (
-    <div className={'container'}>
+    <div className={'container__full-screen'}>
       <img src={pizza.imageUrl} alt={pizza.title} />
       <h2>{pizza.title}</h2>
       <h4>{pizza.price} Руб.</h4>
